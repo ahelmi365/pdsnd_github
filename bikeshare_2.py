@@ -20,6 +20,10 @@ def get_filters():
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
+    print()
+    print()
+    print()
+
     print('Hello! Let\'s explore some US bikeshare data!')
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     list_city = ['chicago', 'new york city', 'washington']
@@ -93,96 +97,114 @@ def load_data(city, month, day):
 
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
+    restart = input('\nWould you like to see statistics on the most frequent times of travel? \nEnter yes or no.\n')
+    if restart.lower() == 'yes':
+        print('\nCalculating The Most Frequent Times of Travel...\n')
+        start_time = time.time()
 
-    print('\nCalculating The Most Frequent Times of Travel...\n')
-    start_time = time.time()
+        # convert the Start Time column to datetime
+        df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    # convert the Start Time column to datetime
-    df['Start Time'] = pd.to_datetime(df['Start Time'])
+        # TO DO: display the most common month:
+        # extract month from the Start Time column to create an month column
+        df['month'] = df['Start Time'].dt.month
 
-    # TO DO: display the most common month:
-    # extract month from the Start Time column to create an month column
-    df['month'] = df['Start Time'].dt.month
+        # find the most popular month
+        popular_month = df['month'].mode()[0]
+        print('Most Popular Month:', popular_month)
 
-    # find the most popular month
-    popular_month = df['month'].mode()[0]
-    print('Most Popular Month:', popular_month)
+        # TO DO: display the most common day of week:
+        # extract month from the Start Time column to create an month column
+        df['day_of_week'] = df['Start Time'].dt.weekday_name
+        # find the most popular day_of_week
+        popular_day_of_week = df['day_of_week'].mode()[0]
+        print('Most Popular Day of Week:', popular_day_of_week)
 
-    # TO DO: display the most common day of week:
-    # extract month from the Start Time column to create an month column
-    df['day_of_week'] = df['Start Time'].dt.weekday_name
-    # find the most popular day_of_week
-    popular_day_of_week = df['day_of_week'].mode()[0]
-    print('Most Popular Day of Week:', popular_day_of_week)
+        # TO DO: display the most common start hour:
+        # extract hour from the Start Time column to create an hour column
+        df['hour'] = df['Start Time'].dt.hour
+        # find the most popular hour
+        popular_hour = df['hour'].mode()[0]
+        print('Most Popular Start Hour:', popular_hour)
 
-    # TO DO: display the most common start hour:
-    # extract hour from the Start Time column to create an hour column
-    df['hour'] = df['Start Time'].dt.hour
-    # find the most popular hour
-    popular_hour = df['hour'].mode()[0]
-    print('Most Popular Start Hour:', popular_hour)
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-'*60)
+        print()
+        print()
+        print()
+    else:
+        print()
+        print()
+        print()
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*60)
-    print()
-    print()
-    print()
 
 
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
+    restart = input('\nWould you like to see statistics on the most popular stations and trip? \nEnter yes or no.\n')
+    if restart.lower() == 'yes':
+        print('\nCalculating The Most Popular Stations and Trip...\n')
+        start_time = time.time()
 
-    print('\nCalculating The Most Popular Stations and Trip...\n')
-    start_time = time.time()
+        # TO DO: display most commonly used start station
+        popular_start_station = df['Start Station'].mode()[0]
+        print('Most Popular Start Station:', popular_start_station)
 
-    # TO DO: display most commonly used start station
-    popular_start_station = df['Start Station'].mode()[0]
-    print('Most Popular Start Station:', popular_start_station)
+        # TO DO: display most commonly used end station
+        popular_end_station = df['End Station'].mode()[0]
+        print('Most Popular End Station:', popular_end_station)
+        print()
 
-    # TO DO: display most commonly used end station
-    popular_end_station = df['End Station'].mode()[0]
-    print('Most Popular End Station:', popular_end_station)
-    print()
+        # TO DO: display most frequent combination of start station and end station trip
+        popular_start_end_station = df.groupby(['Start Station','End Station']).size().idxmax()
+        print("Most frequent combination of startstation end station trip:")
+        print("    1.", popular_start_end_station[0])
+        print("    2.", popular_start_end_station[1])
 
-    # TO DO: display most frequent combination of start station and end station trip
-    popular_start_end_station = df.groupby(['Start Station','End Station']).size().idxmax()
-    print("Most frequent combination of startstation end station trip:")
-    print("    1.", popular_start_end_station[0])
-    print("    2.", popular_start_end_station[1])
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-'*60)
+        print()
+        print()
+        print()
+    else:
+        print()
+        print()
+        print()
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*60)
-    print()
-    print()
-    print()
 
 
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
+    restart = input('\nWould you like to see statistics on the total and average trip duration? \nEnter yes or no.\n')
+    if restart.lower() == 'yes':
+        print('\nCalculating Trip Duration...\n')
+        start_time = time.time()
 
-    print('\nCalculating Trip Duration...\n')
-    start_time = time.time()
+        # TO DO: display total travel time
+        total_time = int(df['Trip Duration'].sum())
+        print("Total travel time in seconds:", total_time)
+        print("Total travel time in minutes:", int(total_time // 60))
+        if total_time >= 3600:
+            print("Total travel time in hours:", int((total_time // 60)//60))
+        print()
 
-    # TO DO: display total travel time
-    total_time = int(df['Trip Duration'].sum())
-    print("Total travel time in seconds:", total_time)
-    print("Total travel time in minutes:", int(total_time // 60))
-    if total_time >= 3600:
-        print("Total travel time in hours:", int((total_time // 60)//60))
-    print()
+        # TO DO: display mean travel time
+        total_time = int(df['Trip Duration'].mean())
+        print("Mean travel time in seconds:", total_time)
+        print("Mean travel time in minutes:", int(total_time // 60))
+        if total_time >= 3600:
+            print("Mean travel time in hours:", int((total_time // 60)//60))
 
-    # TO DO: display mean travel time
-    total_time = int(df['Trip Duration'].mean())
-    print("Mean travel time in seconds:", total_time)
-    print("Mean travel time in minutes:", int(total_time // 60))
-    if total_time >= 3600:
-        print("Mean travel time in hours:", int((total_time // 60)//60))
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-'*60)
+        print()
+        print()
+        print()
+    else:
+        print()
+        print()
+        print()
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*60)
-    print()
-    print()
-    print()
 
 
 def user_stats(df, city):
@@ -193,34 +215,40 @@ def user_stats(df, city):
         Washington does not have two columns (Gender and Birth Year)
         So we will not calc some stats here if the city is Washington
     """
+    restart = input('\nWould you like to see statistics on bikeshare users? \nEnter yes or no.\n')
+    if restart.lower() == 'yes':
+        print('\nCalculating User Stats...\n')
+        start_time = time.time()
 
-    print('\nCalculating User Stats...\n')
-    start_time = time.time()
-
-    # TO DO: Display counts of user types:
-    df['Number of Users'] = 1  # this new column to be used in groupby()
-    count_user_type = df.groupby(['User Type']).count()[['Number of Users']]
-    print(count_user_type)
-    print()
-
-    # TO DO: Display counts of gender
-    # To get the city entered by the user
-    if city != "washington":  # Beacuse washington doesn't have Gender nor Birth Year
-        count_gender = df.groupby(['Gender']).count()[['Number of Users']]
-        print(count_gender)
+        # TO DO: Display counts of user types:
+        df['Number of Users'] = 1  # this new column to be used in groupby()
+        count_user_type = df.groupby(['User Type']).count()[['Number of Users']]
+        print(count_user_type)
         print()
 
-        # TO DO: Display earliest, most recent, and most common year of birth
-        print("The earliest year of birth:", int(df['Birth Year'].min()))
-        print("The most recent year of birth:", int(df['Birth Year'].max()))
-        print("The most common year of birth:", int(df['Birth Year'].mode()[0]))
+        # TO DO: Display counts of gender
+        # To get the city entered by the user
+        if city != "washington":  # Beacuse washington doesn't have Gender nor Birth Year
+            count_gender = df.groupby(['Gender']).count()[['Number of Users']]
+            print(count_gender)
+            print()
+
+            # TO DO: Display earliest, most recent, and most common year of birth
+            print("The earliest year of birth:", int(df['Birth Year'].min()))
+            print("The most recent year of birth:", int(df['Birth Year'].max()))
+            print("The most common year of birth:", int(df['Birth Year'].mode()[0]))
+            print()
+
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-'*60)
+        print()
+        print()
+        print()
+    else:
+        print()
+        print()
         print()
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*60)
-    print()
-    print()
-    print()
 
 
 def main():
