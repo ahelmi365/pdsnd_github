@@ -159,16 +159,22 @@ def trip_duration_stats(df):
     # TO DO: display total travel time
     total_time = int(df['Trip Duration'].sum())
     print("Total travel time in seconds:", total_time)
+
+    # devide by 60 to get the time in minutes
     print("Total travel time in minutes:", int(total_time // 60))
     if total_time >= 3600:
+        # devide by 60 TWICE to get the time in hours
         print("Total travel time in hours:", int((total_time // 60)//60))
     print()
 
     # TO DO: display mean travel time
     total_time = int(df['Trip Duration'].mean())
     print("Mean travel time in seconds:", total_time)
+
+    # devide by 60 to get the time in minutes
     print("Mean travel time in minutes:", int(total_time // 60))
     if total_time >= 3600:
+        # devide by 60 TWICE to get the time in hours
         print("Mean travel time in hours:", int((total_time // 60)//60))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
