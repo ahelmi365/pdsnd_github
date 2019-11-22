@@ -46,6 +46,9 @@ def get_filters():
         day = day.lower()
 
     print('-'*60)
+    print()
+    print()
+    print()
     return city, month, day
 
 
@@ -121,6 +124,9 @@ def time_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*60)
+    print()
+    print()
+    print()
 
 
 def station_stats(df):
@@ -146,6 +152,9 @@ def station_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*60)
+    print()
+    print()
+    print()
 
 
 def trip_duration_stats(df):
@@ -171,6 +180,9 @@ def trip_duration_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*60)
+    print()
+    print()
+    print()
 
 
 def user_stats(df, city):
@@ -207,6 +219,8 @@ def user_stats(df, city):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*60)
     print()
+    print()
+    print()
 
 
 def main():
@@ -220,6 +234,9 @@ def main():
         user_stats(df, city)
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
+            print()
+            print()
+            print()
             break
 
 
